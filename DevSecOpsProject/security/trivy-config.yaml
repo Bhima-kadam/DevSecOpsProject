@@ -1,0 +1,37 @@
+# Trivy configuration 
+# trivy-config.yaml
+
+# Specify the output format
+output: trivy-scan-results.json
+
+# Define the severity levels to include in the report
+severity:
+  - HIGH
+  - CRITICAL
+
+# Ignore certain vulnerabilities (use CVE identifiers)
+ignoreUnfixed: true
+
+# Enable scanning of infrastructure as code (IaC) files
+iac:
+  enabled: true
+
+# Define paths to exclude from scanning
+skipDirs:
+  - node_modules
+  - vendor
+
+# Define file types to exclude from scanning
+skipFiles:
+  - "*.md"
+  - "*.txt"
+
+# Specify repository scanning options
+vulnType:
+  - os
+  - library
+
+# Enable security scanning for configuration files
+scanConfigFiles: true
+
+

@@ -1,0 +1,6 @@
+# OWASP ZAP configuration
+spider:
+  target: "http://localhost:5000"
+scan:
+  target: "http://localhost:5000"
+
