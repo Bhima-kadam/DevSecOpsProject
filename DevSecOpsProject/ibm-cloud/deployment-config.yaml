@@ -1,14 +1,40 @@
-# Terraform file 
-# main.tf
-provider "aws" {
-  region = "us-east-1"
-}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devsecops-app
+  labels:
+    app: devsecops-app
+spec:
+  replicas: 3  # Number of pod replicas to run
+  selector:
+    matchLabels:
+      app: devsecops-app
+  template:
+    metadata:
+      labels:
+        app: devsecops-app
+    spec:
+      containers:
+      - name: devsecops-app
+        image: us.icr.io/my-registry/devsecops-app:latest  # Change to your IBM Cloud registry image
+        ports:
+        - containerPort: 5000  # The port the app will run on in the container
+        env:
+        - name: FLASK_APP
+          value: "main.py"  # Name of your Flask app file
+        - name: FLASK_ENV
+          value: "production"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devsecops-app-service
+spec:
+  selector:
+    app: devsecops-app
+  ports:
+    - protocol: TCP
+      port: 80  # Exposing service on port 80
+      targetPort: 5000  # This should match the container port
+  type: LoadBalancer  # Expose the service with a public IP (if using cloud provider)
 
-resource "aws_instance" "devsecops" {
-  ami           = "ami-0c55b159cbfafe1f0"
-  instance_type = "t2.micro"
-
-  tags = {
-    Name = "DevSecOpsInstance"
-  }
-}

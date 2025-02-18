@@ -1,6 +1,4 @@
-# OWASP ZAP configuration
+# Sample OWASP ZAP configuration for security scanning
 spider:
-  target: "http://localhost:5000"
-scan:
-  target: "http://localhost:5000"
-
+  maxDepth: 10
+  maxDuration: 60
